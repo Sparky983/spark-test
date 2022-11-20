@@ -11,6 +11,59 @@
 
 <p align="center">A fluent testing and assertions library.</p>
 
+## 📦 Installation
+
+Replace `{release}` with the latest release version.
+
+<img src="https://img.shields.io/github/v/tag/sparky983/spark-test?display_name=release&label=Release&style=flat-square&color=e672ff&labelColor=000d26" alt="Version">
+
+The latest developmental version can be found in the `gradle.properties` file.
+
+### Gradle (Kotlin DSL)
+
+```kotlin
+repositories {
+    maven("https://repo.sparky983.me/releases")
+}
+
+dependencies {
+    implementation("me.sparky983:spark-test:{release}")
+}
+```
+
+### Gradle (Groovy DSL)
+
+```groovy
+repositories {
+    maven {
+        url "https://repo.sparky983.me/releases"
+    }
+}
+
+dependencies {
+    implementation "me.sparky983:spark-test:{release}"
+}
+```
+
+### Maven
+
+```xml
+<repositories>
+    <repository>
+        <id>sparky</id>
+        <url>https://repo.sparky983.me/releases</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>me.sparky983</groupId>
+        <artifactId>spark-test</artifactId>
+        <version{release}</version>
+    </dependency>
+</dependencies>
+```
+
 ## Example Tests
 
 ```java

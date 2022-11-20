@@ -59,7 +59,7 @@ dependencies {
     <dependency>
         <groupId>me.sparky983</groupId>
         <artifactId>spark-test</artifactId>
-        <version{release}</version>
+        <version>{release}</version>
     </dependency>
 </dependencies>
 ```

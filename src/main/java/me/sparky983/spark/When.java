@@ -9,7 +9,7 @@ public final class When<T, R> {
     private final T given;
     private final Function<T, R> when;
 
-    public When(final T given, final Function<T, R> when) {
+    When(final T given, final Function<T, R> when) {
 
         this.given = given;
         this.when = Objects.requireNonNull(when, "when");

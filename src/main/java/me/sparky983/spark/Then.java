@@ -8,7 +8,7 @@ public final class Then<T, R> {
     private final T given;
     private final Function<T, R> when;
 
-    public Then(final T given, final Function<T, R> when) {
+    Then(final T given, final Function<T, R> when) {
 
         this.given = given;
         this.when = Objects.requireNonNull(when, "when");

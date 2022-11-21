@@ -175,15 +175,16 @@ public interface Assertion<T> {
         return (inputSupplier) -> {
             try {
                 inputSupplier.get();
-                throw new AssertionError("Expected exception of type `" + exception.getName()
-                        + "` to be thrown, found `null`");
             } catch (final Throwable throwable) {
                 if (!exception.isInstance(throwable)) {
                     throw new AssertionError("Expected exception of type `" + exception.getName()
                             + "` to be thrown, found `" + throwable.getClass().getName() + ": "
                             + throwable.getMessage() + "`");
                 }
+                return;
             }
+            throw new AssertionError("Expected exception of type `" + exception.getName()
+                    + "` to be thrown, found `null`");
         };
     }
 

@@ -29,5 +29,10 @@ class ThrowsExceptionTest {
                         .doAssertion(() -> {
                             throw new NullPointerException();
                         }));
+
+        assertThrows(AssertionError.class, () -> {
+            throwsException(AssertionError.class)
+                    .doAssertion(() -> null);
+        });
     }
 }

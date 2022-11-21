@@ -5,12 +5,39 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
+/**
+ * Represents an assertion.
+ *
+ * @param <T> the type of the object where the assertion is being made on.
+ */
 @FunctionalInterface
 public interface Assertion<T> {
 
-    void doAssertion(Supplier<T> then);
+    /**
+     * Performs the assertion on the result.
+     *
+     * @param when a supplier that supplies the result.
+     * <p>
+     * Callers should note that the supplier may throw exceptions.
+     * <p>
+     * Callers should also be careful about supplying a {@code null} supplier, because
+     * implementations are not required to handle {@code null} suppliers.
+     * @throws AssertionError if the assertion failed.
+     * @since 1.0
+     */
+    void doAssertion(Supplier<T> when);
 
-    static <T> Assertion<T> not(Assertion<T> assertion) {
+    /**
+     * Creates a new assertion that succeeds if the specified assertion fails, otherwise it
+     * succeeds.
+     *
+     * @param assertion the assertion.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the assertion is {@code null}.
+     * @since 1.0
+     */
+    static <T> Assertion<T> not(final Assertion<T> assertion) {
 
         Objects.requireNonNull(assertion, "assertion");
         return (inputSupplier) -> {
@@ -27,6 +54,16 @@ public interface Assertion<T> {
     General validators
      */
 
+    /**
+     * Creates a new assertion that succeeds if the supplier returns an instance of the specified
+     * class, otherwise fails.
+     *
+     * @param cls the class.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the class is {@code null}.
+     * @since 1.0
+     */
     static <T> Assertion<T> isInstanceOf(final Class<?> cls) {
 
         Objects.requireNonNull(cls, "cls");
@@ -39,6 +76,19 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if applying the method reference on the result is not
+     * equal to the other object.
+     * <p>
+     * Equality is defined by the {@code Objects.equals(o, result}.
+     *
+     * @param methodReference the method reference.
+     * @param o the other object.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the method reference is {@code null}.
+     * @since 1.0
+     */
     static <T> Assertion<T> isEqualTo(final Function<T, ?> methodReference, final Object o) {
 
         Objects.requireNonNull(methodReference, "methodReference");
@@ -54,6 +104,16 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if the result is not equal to the other object.
+     * <p>
+     * Equality is defined by the {@code Objects.equals(o, result}.
+     *
+     * @param o the other object
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
     static <T> Assertion<T> isEqualTo(final Object o) {
 
         return (inputSupplier) -> {
@@ -64,6 +124,16 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if the result is equal to the other object.
+     * <p>
+     * Equality is defined by the {@code Objects.equals(o, result}.
+     *
+     * @param o the other object.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
     static <T> Assertion<T> isNotEqualTo(final Object o) {
 
         return (inputSupplier) -> {
@@ -75,13 +145,33 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates an assertion that fails if the result is {@code null}.
+     * <p>
+     * The same as {@code Assertion.isNotEqualTo(null)}.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
     static <T> Assertion<T> isNotNull() {
 
         return isNotEqualTo(null);
     }
 
+    /**
+     * Creates a new assertion that succeeds only if the supplying the result fails with an
+     * exception that is an instance of the specified type.
+     *
+     * @param exception the exception type.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the exception type is {@code null}.
+     * @since 1.0
+     */
     static <T> Assertion<T> throwsException(final Class<? extends Throwable> exception) {
 
+        Objects.requireNonNull(exception, "exception");
         return (inputSupplier) -> {
             try {
                 inputSupplier.get();
@@ -97,6 +187,13 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if supplying the result fails.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
     static <T> Assertion<T> doesNotThrow() {
 
         return (inputSupplier) -> {
@@ -114,6 +211,15 @@ public interface Assertion<T> {
     CharSequence validators
      */
 
+    /**
+     * Creates a new assertion that fails if the result does not start with the specified prefix.
+     *
+     * @param prefix the prefix.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the prefix is {@code null}.
+     * @since 1.0
+     */
     static <T extends CharSequence> Assertion<T> startsWith(final String prefix) {
 
         Objects.requireNonNull(prefix, "prefix");
@@ -128,6 +234,15 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if the result does not end with the specified suffix.
+     *
+     * @param suffix the suffix.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the suffix is {@code null}.
+     * @since 1.0
+     */
     static <T extends CharSequence> Assertion<T> endsWith(final String suffix) {
 
         Objects.requireNonNull(suffix, "suffix");
@@ -142,6 +257,15 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if the result does contain the specified substring.
+     *
+     * @param sub the substring.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the substring is {@code null}.
+     * @since 1.0
+     */
     static <T extends CharSequence> Assertion<T> contains(final CharSequence sub) {
 
         Objects.requireNonNull(sub, "sub");
@@ -156,6 +280,15 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if the result does not match the regex.
+     *
+     * @param regex the regex.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the regex is {@code null}.
+     * @since 1.0
+     */
     static <T extends CharSequence> Assertion<T> matches(final Pattern regex) {
 
         Objects.requireNonNull(regex, "regex");
@@ -170,6 +303,15 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if the result does not match the regex.
+     *
+     * @param regex the regex.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the regex is {@code null}.
+     * @since 1.0
+     */
     static <T extends CharSequence> Assertion<T> matches(final String regex) {
 
         Objects.requireNonNull(regex, "regex");

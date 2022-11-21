@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * A given object.
+ * Represents given object and the start of a test.
  * <p>
  * In BDD, the given is state of a system before it has been acted upon.
  * <p>

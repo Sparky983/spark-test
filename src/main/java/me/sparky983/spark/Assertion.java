@@ -3,6 +3,7 @@ package me.sparky983.spark;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
@@ -177,12 +178,12 @@ public interface Assertion<T> {
             try {
                 resultSupplier.get();
             } catch (final Throwable throwable) {
-                if (!exception.isInstance(throwable)) {
-                    throw new AssertionError("Expected exception of type `" + exception.getName()
-                            + "` to be thrown, found `" + throwable.getClass().getName() + ": "
-                            + throwable.getMessage() + "`");
+                if (exception.isInstance(throwable)) {
+                    return;
                 }
-                return;
+                throw new AssertionError("Expected exception of type `" + exception.getName()
+                        + "` to be thrown, found `" + throwable.getClass().getName() + ": "
+                        + throwable.getMessage() + "`");
             }
             throw new AssertionError("Expected exception of type `" + exception.getName()
                     + "` to be thrown, found `null`");
@@ -362,6 +363,80 @@ public interface Assertion<T> {
             final Object result = resultSupplier.get();
             if (collection.contains(result)) {
                 throw new AssertionError("Expected `" + collection + "` to not contain `" + result + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if any elements don't match the specified predicate.
+     *
+     * @param predicate the predicate.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @param <E> the type of the collection's elements.
+     * @throws NullPointerException if the predicate is {@code null}.
+     * @since 1.0
+     */
+    static <T extends Collection<E>, E> Assertion<T> allMatch(final Predicate<E> predicate) {
+
+        Objects.requireNonNull(predicate, "predicate");
+        return (resultSupplier) -> {
+            final T result = resultSupplier.get();
+            int i = 0;
+            for (E e : result) {
+                if (!predicate.test(e)) {
+                    throw new AssertionError("Item at index Collection[" + i + "] of `" + result + "` (`" + e + "`) did not match the given predicate");
+                }
+                i++;
+            }
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if all elements don't match the specified predicate.
+     *
+     * @param predicate the predicate.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @param <E> the type of the collection's elements.
+     * @throws NullPointerException if the predicate is {@code null}.
+     * @since 1.0
+     */
+    static <T extends Collection<E>, E> Assertion<T> anyMatch(final Predicate<E> predicate) {
+
+        Objects.requireNonNull(predicate, "predicate");
+        return (resultSupplier) -> {
+            final T result = resultSupplier.get();
+            for (E e : result) {
+                if (predicate.test(e)) {
+                    return;
+                }
+            }
+            throw new AssertionError("No elements of `" + result + "` matched the given predicate");
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if any elements match the specified predicate.
+     *
+     * @param predicate the predicate.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @param <E> the type of the collection's elements.
+     * @throws NullPointerException if the predicate is {@code null}.
+     * @since 1.0
+     */
+    static <T extends Collection<E>, E> Assertion<T> noneMatch(final Predicate<E> predicate) {
+
+        Objects.requireNonNull(predicate, "predicate");
+        return (resultSupplier) -> {
+            final T result = resultSupplier.get();
+            int i = 0;
+            for (E e : result) {
+                if (predicate.test(e)) {
+                    throw new AssertionError("Item at index Collection[" + i + "] of `" + result + "` (`" + e + "`) matched the given predicate");
+                }
+                i++;
             }
         };
     }

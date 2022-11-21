@@ -1,10 +1,10 @@
 package me.sparky983.spark;
 
-import static me.sparky983.spark.Assertion.*;
+import org.junit.jupiter.api.Test;
+
+import static me.sparky983.spark.Assertion.throwsException;
 import static me.sparky983.spark.Given.given;
 import static me.sparky983.spark.Given.givenNull;
-
-import org.junit.jupiter.api.Test;
 
 class GivenTest {
 

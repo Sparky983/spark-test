@@ -560,6 +560,13 @@ public interface Assertion<T> {
         }
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (min > result.intValue() || max < result.intValue()) {
+                throw new AssertionError("Expected `" + result + "` to be in range `" + min + "-"
+                        + max + "`");
+            }
         };
     }
 

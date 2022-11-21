@@ -26,6 +26,6 @@ class IsNotEqualToTest {
 
         given(isNotEqualTo("not null"))
                 .whenDo((isNotEqualTo) -> isNotEqualTo.doAssertion(() -> null))
-                .then(throwsException(AssertionError.class));
+                .then(doesNotThrow());
     }
 }

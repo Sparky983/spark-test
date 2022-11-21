@@ -440,4 +440,29 @@ public interface Assertion<T> {
             }
         };
     }
+
+    /**
+     * Creates an assertion that fails if the result does not contain any of the specified objects.
+     *
+     * @param objects the objects
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the objects is {@code null}.
+     * @since 1.0
+     */
+    static <T extends Collection<?>> Assertion<T> contains(final Object... objects) {
+
+        Objects.requireNonNull(objects, "objects");
+        return (resultSupplier) -> {
+            final T result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            for (Object o : objects) {
+                if (!result.contains(o)) {
+                    throw new AssertionError("Expected `" + result + "` to contain `" + o + "`");
+                }
+            }
+        };
+    }
 }

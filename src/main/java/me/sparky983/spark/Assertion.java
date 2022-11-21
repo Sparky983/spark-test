@@ -331,6 +331,7 @@ public interface Assertion<T> {
      * @return the new assertion.
      * @param <T> the type of the result.
      * @throws NullPointerException if the collection is {@code null}.
+     * @see #isNotIn(Collection)
      * @since 1.0
      */
     static <T> Assertion<T> isIn(final Collection<?> collection) {
@@ -344,6 +345,16 @@ public interface Assertion<T> {
         };
     }
 
+    /**
+     * Creates a new assertion that fails if the result is in the specified collection.
+     *
+     * @param collection the collection.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the collection is {@code null}.
+     * @see #isIn(Collection)
+     * @since 1.0
+     */
     static <T> Assertion<T> isNotIn(final Collection<?> collection) {
 
         Objects.requireNonNull(collection, "collection");

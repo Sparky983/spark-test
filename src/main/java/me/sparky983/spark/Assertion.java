@@ -538,4 +538,160 @@ public interface Assertion<T> {
             }
         };
     }
+
+    /*
+    Range assertions
+     */
+
+    /**
+     * Creates a new assertion that fails if the result is not in the range of min and max.
+     *
+     * @param min the min.
+     * @param max the max.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws IllegalArgumentException if min is greater than max.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isInRange(final int min, final int max) {
+
+        if (min > max) {
+            throw new IllegalArgumentException("min must be less than or equal to max");
+        }
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (min > result.intValue() || max < result.intValue()) {
+                throw new AssertionError("Expected `" + result + "` to be in range `" + min + "-"
+                        + max + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if the result is less than or equal to the specified
+     * value.
+     *
+     * @param min the min (exclusive).
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isGreaterThan(final int min) {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (min >= result.intValue()) {
+                throw new AssertionError("Expected `" + result + "` to be greater than `" + min
+                        + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if the result is greater than or equal to the specified
+     * value.
+     *
+     * @param max the max (exclusive).
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isLessThan(final int max) {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (max <= result.doubleValue()) {
+                throw new AssertionError("Expected `" + result + "` to be less than `" + max + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates an assertion that fails if the result is not positive.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isPositive() {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (result.doubleValue() <= 0) {
+                throw new AssertionError("Expected result to be positive, was `" + result.doubleValue() + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates an assertion that fails if the result is not negative.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isNegative() {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (result.doubleValue() >= 0) {
+                throw new AssertionError("Expected result to be negative, was `" + result.doubleValue() + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates an assertion that fails if the result is positive.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isNotPositive() {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (result.doubleValue() > 0) {
+                throw new AssertionError("Expected result to be not positive, was `" + result.doubleValue() + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates an assertion that fails if the result is negative.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isNotNegative() {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (result.doubleValue() < 0) {
+                throw new AssertionError("Expected result to be not negative, was `" + result.doubleValue() + "`");
+            }
+        };
+    }
 }

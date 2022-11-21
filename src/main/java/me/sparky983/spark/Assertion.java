@@ -539,6 +539,10 @@ public interface Assertion<T> {
         };
     }
 
+    /*
+    Range assertions
+     */
+
     /**
      * Creates a new assertion that fails if the result is less than or equal to the specified
      * value.

@@ -345,4 +345,49 @@ public interface Assertion<T> {
             }
         };
     }
+
+    /**
+     * Creates a new assertion that fails if the result is less than or equal to the specified
+     * value.
+     *
+     * @param min the min (exclusive).
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isGreaterThan(final int min) {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (min >= result.intValue()) {
+                throw new AssertionError("Expected `" + result + "` to be greater than `" + min
+                        + "`");
+            }
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if the result is greater than or equal to the specified
+     * value.
+     *
+     * @param max the max (exclusive).
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isLessThan(final int max) {
+
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (max <= result.intValue()) {
+                throw new AssertionError("Expected `" + result + "` to be less than `" + max + "`");
+            }
+        };
+    }
 }

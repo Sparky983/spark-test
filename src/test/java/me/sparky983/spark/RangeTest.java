@@ -49,4 +49,44 @@ class RangeTest {
                 .whenDo((isInRange) -> isInRange.doAssertion(() -> 75))
                 .then(doesNotThrow());
     }
+
+    @Test
+    void testIsGreaterThan() {
+
+        given(isGreaterThan(50))
+                .whenDo((isGreaterThan) -> isGreaterThan.doAssertion(() -> 49))
+                .then(throwsException(AssertionError.class));
+
+        given(isGreaterThan(50))
+                .whenDo((isGreaterThan) -> isGreaterThan.doAssertion(() -> 50))
+                .then(throwsException(AssertionError.class));
+
+        given(isGreaterThan(50))
+                .whenDo((isGreaterThan) -> isGreaterThan.doAssertion(() -> null))
+                .then(throwsException(AssertionError.class));
+
+        given(isGreaterThan(50))
+                .whenDo((isGreaterThan) -> isGreaterThan.doAssertion(() -> 51))
+                .then(doesNotThrow());
+    }
+
+    @Test
+    void testIsLessThan() {
+
+        given(isLessThan(50))
+                .whenDo((isLessThan) -> isLessThan.doAssertion(() -> 51))
+                .then(throwsException(AssertionError.class));
+
+        given(isLessThan(50))
+                .whenDo((isLessThan) -> isLessThan.doAssertion(() -> 50))
+                .then(throwsException(AssertionError.class));
+
+        given(isLessThan(50))
+                .whenDo((isLessThan) -> isLessThan.doAssertion(() -> null))
+                .then(throwsException(AssertionError.class));
+
+        given(isLessThan(50))
+                .whenDo((isLessThan) -> isLessThan.doAssertion(() -> 49))
+                .then(doesNotThrow());
+    }
 }

@@ -1,6 +1,7 @@
 package me.sparky983.spark;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -462,6 +463,35 @@ public interface Assertion<T> {
                 if (!result.contains(o)) {
                     throw new AssertionError("Expected `" + result + "` to contain `" + o + "`");
                 }
+            }
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if the element at the specified index in the result does
+     * not equal the other object or the list is shorter than the index.
+     *
+     * @param o the other object.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws IndexOutOfBoundsException if the index is negative.
+     * @since 1.0
+     */
+    static <T extends List<?>> Assertion<T> indexEquals(final int index, final Object o) {
+
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("index must be positive");
+        }
+        return (resultSupplier) -> {
+            final T result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("result was `null`");
+            }
+            if (index >= result.size()) {
+                throw new AssertionError("index (" + index + ") is greater than the result's size (" + result.size() + ")");
+            }
+            if (!Objects.equals(o, result.get(index))) {
+                throw new AssertionError("result[" + index + "] does not equal `" + o + "`");
             }
         };
     }

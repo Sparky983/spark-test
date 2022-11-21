@@ -318,4 +318,31 @@ public interface Assertion<T> {
         Objects.requireNonNull(regex, "regex");
         return matches(Pattern.compile(regex));
     }
+
+    /**
+     * Creates a new assertion that fails if the result is not in the range of min and max.
+     *
+     * @param min the min.
+     * @param max the max.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws IllegalArgumentException if min is greater than max.
+     * @since 1.0
+     */
+    static <T extends Number> Assertion<T> isInRange(final int min, final int max) {
+
+        if (min > max) {
+            throw new IllegalArgumentException("min must be less than or equal to max");
+        }
+        return (resultSupplier) -> {
+            final Number result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Result was `null`");
+            }
+            if (min > result.intValue() || max < result.intValue()) {
+                throw new AssertionError("Expected `" + result + "` to be in range `" + min + "-"
+                        + max + "`");
+            }
+        };
+    }
 }

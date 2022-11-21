@@ -1,10 +1,17 @@
 package me.sparky983.spark;
 
-import static me.sparky983.spark.Assertion.*;
+import org.junit.jupiter.api.Test;
+
+import static me.sparky983.spark.Assertion.doesNotThrow;
+import static me.sparky983.spark.Assertion.isGreaterThan;
+import static me.sparky983.spark.Assertion.isLessThan;
+import static me.sparky983.spark.Assertion.isNegative;
+import static me.sparky983.spark.Assertion.isNotNegative;
+import static me.sparky983.spark.Assertion.isNotPositive;
+import static me.sparky983.spark.Assertion.isPositive;
+import static me.sparky983.spark.Assertion.throwsException;
 import static me.sparky983.spark.Given.given;
 import static me.sparky983.spark.When.when;
-
-import org.junit.jupiter.api.Test;
 
 class RangeTest {
 

@@ -27,6 +27,7 @@ public final class Then<T, R> {
      *
      * @param assertion the additional assertion.
      * @return the then instance (for chaining).
+     * @throws AssertionError if the assertion fails.
      * @throws NullPointerException if the assertion is {@code null}.
      * @since 1.0
      */

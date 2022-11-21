@@ -46,6 +46,7 @@ public final class When<T, R> {
      * @param assertion the assertion.
      * @return a new then that can be used to perform additional assertions via
      * {@link Then#and(Assertion)}.
+     * @throws AssertionError if the assertion fails.
      * @throws NullPointerException if the assertion is {@code null}.
      * @since 1.0
      */

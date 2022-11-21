@@ -89,4 +89,100 @@ class RangeTest {
                 .whenDo((isLessThan) -> isLessThan.doAssertion(() -> 49))
                 .then(doesNotThrow());
     }
+
+    @Test
+    void testIsPositive() {
+
+        given(isPositive())
+                .whenDo((isPositive) -> isPositive.doAssertion(() -> -1))
+                .then(throwsException(AssertionError.class));
+
+        given(isPositive())
+                .whenDo((isPositive) -> isPositive.doAssertion(() -> 0))
+                .then(throwsException(AssertionError.class));
+
+        given(isPositive())
+                .whenDo((isPositive) -> isPositive.doAssertion(() -> null))
+                .then(throwsException(AssertionError.class));
+
+        given(isPositive())
+                .whenDo((isPositive) -> isPositive.doAssertion(() -> 1))
+                .then(doesNotThrow());
+
+        given(isPositive())
+                .whenDo((isPositive) -> isPositive.doAssertion(() -> Integer.MAX_VALUE))
+                .then(doesNotThrow());
+    }
+
+    @Test
+    void testIsNegative() {
+
+        given(isNegative())
+                .whenDo((isNegative) -> isNegative.doAssertion(() -> 1))
+                .then(throwsException(AssertionError.class));
+
+        given(isNegative())
+                .whenDo((isNegative) -> isNegative.doAssertion(() -> 0))
+                .then(throwsException(AssertionError.class));
+
+        given(isNegative())
+                .whenDo((isNegative) -> isNegative.doAssertion(() -> null))
+                .then(throwsException(AssertionError.class));
+
+        given(isNegative())
+                .whenDo((isNegative) -> isNegative.doAssertion(() -> -1))
+                .then(doesNotThrow());
+
+        given(isNegative())
+                .whenDo((isNegative) -> isNegative.doAssertion(() -> Integer.MIN_VALUE))
+                .then(doesNotThrow());
+    }
+
+    @Test
+    void testIsNotPositive() {
+
+        given(isNotPositive())
+                .whenDo((isNotPositive) -> isNotPositive.doAssertion(() -> 1))
+                .then(throwsException(AssertionError.class));
+
+        given(isNotPositive())
+                .whenDo((isNotPositive) -> isNotPositive.doAssertion(() -> null))
+                .then(throwsException(AssertionError.class));
+
+        given(isNotPositive())
+                .whenDo((isNotPositive) -> isNotPositive.doAssertion(() -> -1))
+                .then(doesNotThrow());
+
+        given(isNotPositive())
+                .whenDo((isNotPositive) -> isNotPositive.doAssertion(() -> 0))
+                .then(doesNotThrow());
+
+        given(isNotPositive())
+                .whenDo((isNotPositive) -> isNotPositive.doAssertion(() -> Integer.MIN_VALUE))
+                .then(doesNotThrow());
+    }
+
+    @Test
+    void testIsNotNegative() {
+
+        given(isNotNegative())
+                .whenDo((isNotNegative) -> isNotNegative.doAssertion(() -> -1))
+                .then(throwsException(AssertionError.class));
+
+        given(isNotNegative())
+                .whenDo((isNotNegative) -> isNotNegative.doAssertion(() -> null))
+                .then(throwsException(AssertionError.class));
+
+        given(isNotNegative())
+                .whenDo((isNotNegative) -> isNotNegative.doAssertion(() -> 1))
+                .then(doesNotThrow());
+
+        given(isNotNegative())
+                .whenDo((isNotNegative) -> isNotNegative.doAssertion(() -> 0))
+                .then(doesNotThrow());
+
+        given(isNotNegative())
+                .whenDo((isNotNegative) -> isNotNegative.doAssertion(() -> Integer.MAX_VALUE))
+                .then(doesNotThrow());
+    }
 }

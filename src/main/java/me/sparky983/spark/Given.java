@@ -140,9 +140,13 @@ public final class Given<T> {
     }
 
     /**
-     * Creates an action (the when-function) that is used to perform assertions on.
+     * Creates an action (the when-function) that is used to perform assertions on with
+     * {@link When#then(Assertion)}.
      * <p>
      * If the method returns void, you should use {@link #whenDo(Consumer)}.
+     * <p>
+     * Note that the when-function is not called immediately, it is only called when an assertion is
+     * made.
      *
      * @param when the when-function
      * @return a new when that uses the specified when-function.
@@ -159,6 +163,9 @@ public final class Given<T> {
     /**
      * Creates a void action (the when-function) that is used to perform assertions on.
      * <p>
+     * <p>
+     * Note that the when-function is not called immediately, it is only called when an assertion is
+     * made.
      * Examples:
      * <pre>
      * class Car {

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 @FunctionalInterface
 public interface Assertion<T> {
 
-    void doAssertion(Supplier<T> then);
+    void doAssertion(Supplier<T> when);
 
     static <T> Assertion<T> not(Assertion<T> assertion) {
 

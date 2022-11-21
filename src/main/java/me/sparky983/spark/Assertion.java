@@ -1,6 +1,7 @@
 package me.sparky983.spark;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -492,6 +493,47 @@ public interface Assertion<T> {
             }
             if (!Objects.equals(o, result.get(index))) {
                 throw new AssertionError("result[" + index + "] does not equal `" + o + "`");
+            }
+        };
+    }
+
+    /**
+     * Returns a new assertion that fails if the resulting collection is unmodifiable.
+     * <p>
+     * Note that this may modify the collection.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Collection<E>, E> Assertion<T> isModifiable() {
+        return (resultSupplier) -> {
+            final T result = resultSupplier.get();
+            try {
+                result.add(null);
+            } catch (final UnsupportedOperationException e) {
+                throw new AssertionError("result (`" + result + "`) is unmodifiable");
+            }
+        };
+    }
+
+    /**
+     * Returns a new assertion that fails if the resulting collection is modifiable.
+     * <p>
+     * Note that this may modify the collection.
+     *
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @since 1.0
+     */
+    static <T extends Collection<?>> Assertion<T> isUnmodifiable() {
+        return (resultSupplier) -> {
+            final T result = resultSupplier.get();
+            try {
+                result.add(null);
+                throw new AssertionError("result (`" + result + "`) is modifiable");
+            } catch (final UnsupportedOperationException e) {
+                // it is unmodifiable
             }
         };
     }

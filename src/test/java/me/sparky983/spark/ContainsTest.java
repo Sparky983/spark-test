@@ -3,14 +3,13 @@ package me.sparky983.spark;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static me.sparky983.spark.Assertion.contains;
 import static me.sparky983.spark.Assertion.doesNotThrow;
 import static me.sparky983.spark.Assertion.throwsException;
 import static me.sparky983.spark.Given.given;
 import static me.sparky983.spark.Given.givenNull;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 class ContainsTest {
 

@@ -1,7 +1,6 @@
 package me.sparky983.spark;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -507,6 +506,7 @@ public interface Assertion<T> {
      * @since 1.0
      */
     static <T extends Collection<E>, E> Assertion<T> isModifiable() {
+
         return (resultSupplier) -> {
             final T result = resultSupplier.get();
             try {
@@ -527,6 +527,7 @@ public interface Assertion<T> {
      * @since 1.0
      */
     static <T extends Collection<?>> Assertion<T> isUnmodifiable() {
+
         return (resultSupplier) -> {
             final T result = resultSupplier.get();
             try {

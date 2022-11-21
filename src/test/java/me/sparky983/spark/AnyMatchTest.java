@@ -1,15 +1,15 @@
 package me.sparky983.spark;
 
-import static me.sparky983.spark.Assertion.anyMatch;
-import static me.sparky983.spark.Assertion.doesNotThrow;
-import static me.sparky983.spark.Assertion.throwsException;
-import static me.sparky983.spark.Given.given;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Predicate;
+
+import static me.sparky983.spark.Assertion.anyMatch;
+import static me.sparky983.spark.Assertion.doesNotThrow;
+import static me.sparky983.spark.Assertion.throwsException;
+import static me.sparky983.spark.Given.given;
 
 class AnyMatchTest {
 

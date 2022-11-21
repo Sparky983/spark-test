@@ -1,14 +1,14 @@
 package me.sparky983.spark;
 
-import static me.sparky983.spark.Assertion.doesNotThrow;
-import static me.sparky983.spark.Assertion.isNotIn;
-import static me.sparky983.spark.Assertion.throwsException;
-import static me.sparky983.spark.Given.given;
-
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import static me.sparky983.spark.Assertion.doesNotThrow;
+import static me.sparky983.spark.Assertion.isNotIn;
+import static me.sparky983.spark.Assertion.throwsException;
+import static me.sparky983.spark.Given.given;
 
 class IsNotInTest {
 

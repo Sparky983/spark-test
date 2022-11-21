@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static me.sparky983.spark.Assertion.doesNotThrow;
 import static me.sparky983.spark.Assertion.isGreaterThan;
+import static me.sparky983.spark.Assertion.isInRange;
 import static me.sparky983.spark.Assertion.isLessThan;
 import static me.sparky983.spark.Assertion.isNegative;
 import static me.sparky983.spark.Assertion.isNotNegative;

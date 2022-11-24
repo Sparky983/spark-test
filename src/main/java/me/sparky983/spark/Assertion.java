@@ -49,7 +49,7 @@ public interface Assertion<T> {
             } catch (final AssertionError error) {
                 return;
             }
-            throw new AssertionError("Expected `" + assertion + "` to fail");
+            throw new AssertionError("Expected <" + assertion + "> to fail");
         };
     }
 
@@ -73,7 +73,7 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Object result = resultSupplier.get();
             if (!cls.isInstance(result)) {
-                throw new AssertionError("Input must be of instance " + cls.getName() + ", was "
+                throw new AssertionError("Input must be of instance <" + cls.getName() + ">, was "
                         + result.getClass().getName());
             }
         };
@@ -98,11 +98,11 @@ public interface Assertion<T> {
         return (receiverSupplier) -> {
             final T receiver = receiverSupplier.get();
             if (receiver == null) {
-                throw new AssertionError("Receiver was `null`");
+                throw new AssertionError("Receiver was <null>");
             }
             final Object result = methodReference.apply(receiver);
             if (!Objects.equals(o, result)) {
-                throw new AssertionError("Expected `" + o + "`, found `" + result + "`");
+                throw new AssertionError("Expected <" + o + ">, found <" + result + ">");
             }
         };
     }
@@ -122,7 +122,7 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Object result = resultSupplier.get();
             if (!Objects.equals(o, result)) {
-                throw new AssertionError("Expected `" + o + "`, found `" + result + "`");
+                throw new AssertionError("Expected <" + o + ">, found <" + result + ">");
             }
         };
     }
@@ -143,7 +143,7 @@ public interface Assertion<T> {
             final Object result = resultSupplier.get();
             if (Objects.equals(o, result)) {
                 throw new AssertionError(
-                        "Expected anything but `" + o + "`, found `" + result + "`");
+                        "Expected anything but <" + o + ">, found <" + result + ">");
             }
         };
     }
@@ -182,12 +182,12 @@ public interface Assertion<T> {
                 if (exception.isInstance(throwable)) {
                     return;
                 }
-                throw new AssertionError("Expected exception of type `" + exception.getName()
-                        + "` to be thrown, found `" + throwable.getClass().getName() + ": "
-                        + throwable.getMessage() + "`");
+                throw new AssertionError("Expected exception of type <" + exception.getName()
+                        + "> to be thrown, found <" + throwable.getClass().getName() + ": "
+                        + throwable.getMessage() + ">", throwable);
             }
-            throw new AssertionError("Expected exception of type `" + exception.getName()
-                    + "` to be thrown, found `null`");
+            throw new AssertionError("Expected exception of type <" + exception.getName()
+                    + "> to be thrown, found <null>");
         };
     }
 
@@ -205,8 +205,8 @@ public interface Assertion<T> {
                 resultSupplier.get();
             } catch (final Throwable throwable) {
                 throw new AssertionError(
-                        "Expected no exception, found `" + throwable.getClass().getName() + ": "
-                                + throwable.getMessage() + "`");
+                        "Expected no exception, found <" + throwable.getClass().getName() + ": "
+                                + throwable.getMessage() + ">", throwable);
             }
         };
     }
@@ -230,10 +230,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final CharSequence result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Input was `null`");
+                throw new AssertionError("Input was <null>");
             }
             if (!result.toString().startsWith(prefix)) {
-                throw new AssertionError("Expected `" + result + "` to start with `" + prefix + "`");
+                throw new AssertionError("Expected <" + result + "> to start with <" + prefix + ">");
             }
         };
     }
@@ -253,10 +253,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final CharSequence result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Input was `null`");
+                throw new AssertionError("Input was <null>");
             }
             if (!result.toString().endsWith(suffix)) {
-                throw new AssertionError("Expected `" + result + "` to end with `" + suffix + "`");
+                throw new AssertionError("Expected <" + result + "> to end with <" + suffix + ">");
             }
         };
     }
@@ -276,10 +276,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final CharSequence result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Input was `null`");
+                throw new AssertionError("Input was <null>");
             }
             if (!result.toString().contains(sub)) {
-                throw new AssertionError("Expected `" + result + "` to contain `" + sub + "`");
+                throw new AssertionError("Expected <" + result + "> to contain <" + sub + ">");
             }
         };
     }
@@ -299,10 +299,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final CharSequence result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Input was `null`");
+                throw new AssertionError("Input was <null>");
             }
             if (!regex.matcher(result).matches()) {
-                throw new AssertionError("Expected `" + result + "` to match `" + regex + "`");
+                throw new AssertionError("Expected <" + result + "> to match <" + regex + ">");
             }
         };
     }
@@ -342,7 +342,7 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Object result = resultSupplier.get();
             if (!collection.contains(result)) {
-                throw new AssertionError("Expected `" + collection + "` to contain `" + result + "`");
+                throw new AssertionError("Expected <" + collection + "> to contain <" + result + ">");
             }
         };
     }
@@ -363,7 +363,7 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Object result = resultSupplier.get();
             if (collection.contains(result)) {
-                throw new AssertionError("Expected `" + collection + "` to not contain `" + result + "`");
+                throw new AssertionError("Expected <" + collection + "> to not contain <" + result + ">");
             }
         };
     }
@@ -386,7 +386,7 @@ public interface Assertion<T> {
             int i = 0;
             for (E e : result) {
                 if (!predicate.test(e)) {
-                    throw new AssertionError("Item at index Collection[" + i + "] of `" + result + "` (`" + e + "`) did not match the given predicate");
+                    throw new AssertionError("Item at result[" + i + "] of <" + result + "> (<" + e + ">) did not match the given predicate");
                 }
                 i++;
             }
@@ -413,7 +413,7 @@ public interface Assertion<T> {
                     return;
                 }
             }
-            throw new AssertionError("No elements of `" + result + "` matched the given predicate");
+            throw new AssertionError("No elements of <" + result + "> matched the given predicate");
         };
     }
 
@@ -435,7 +435,7 @@ public interface Assertion<T> {
             int i = 0;
             for (E e : result) {
                 if (predicate.test(e)) {
-                    throw new AssertionError("Item at index Collection[" + i + "] of `" + result + "` (`" + e + "`) matched the given predicate");
+                    throw new AssertionError("Item at index result[" + i + "] of <" + result + "> (<" + e + ">) matched the given predicate");
                 }
                 i++;
             }
@@ -457,11 +457,11 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final T result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             for (Object o : objects) {
                 if (!result.contains(o)) {
-                    throw new AssertionError("Expected `" + result + "` to contain `" + o + "`");
+                    throw new AssertionError("Expected <" + result + "> to contain <" + o + ">");
                 }
             }
         };
@@ -485,13 +485,13 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final T result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("result was `null`");
+                throw new AssertionError("result was <null>");
             }
             if (index >= result.size()) {
                 throw new AssertionError("index (" + index + ") is greater than the result's size (" + result.size() + ")");
             }
             if (!Objects.equals(o, result.get(index))) {
-                throw new AssertionError("result[" + index + "] does not equal `" + o + "`");
+                throw new AssertionError("result[" + index + "] does not equal <" + o + ">");
             }
         };
     }
@@ -512,7 +512,7 @@ public interface Assertion<T> {
             try {
                 result.add(null);
             } catch (final UnsupportedOperationException e) {
-                throw new AssertionError("result (`" + result + "`) is unmodifiable");
+                throw new AssertionError("result (<" + result + ">) is unmodifiable");
             }
         };
     }
@@ -532,7 +532,7 @@ public interface Assertion<T> {
             final T result = resultSupplier.get();
             try {
                 result.add(null);
-                throw new AssertionError("result (`" + result + "`) is modifiable");
+                throw new AssertionError("result (<" + result + ">) is modifiable");
             } catch (final UnsupportedOperationException e) {
                 // it is unmodifiable
             }
@@ -561,11 +561,11 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             if (min > result.intValue() || max < result.intValue()) {
-                throw new AssertionError("Expected `" + result + "` to be in range `" + min + "-"
-                        + max + "`");
+                throw new AssertionError("Expected <" + result + "> to be in range <" + min + "-"
+                        + max + ">");
             }
         };
     }
@@ -584,11 +584,11 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             if (min >= result.intValue()) {
-                throw new AssertionError("Expected `" + result + "` to be greater than `" + min
-                        + "`");
+                throw new AssertionError("Expected <" + result + "> to be greater than <" + min
+                        + ">");
             }
         };
     }
@@ -607,10 +607,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             if (max <= result.doubleValue()) {
-                throw new AssertionError("Expected `" + result + "` to be less than `" + max + "`");
+                throw new AssertionError("Expected <" + result + "> to be less than <" + max + ">");
             }
         };
     }
@@ -627,10 +627,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             if (result.doubleValue() <= 0) {
-                throw new AssertionError("Expected result to be positive, was `" + result.doubleValue() + "`");
+                throw new AssertionError("Expected result to be positive, was <" + result.doubleValue() + ">");
             }
         };
     }
@@ -647,10 +647,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             if (result.doubleValue() >= 0) {
-                throw new AssertionError("Expected result to be negative, was `" + result.doubleValue() + "`");
+                throw new AssertionError("Expected result to be negative, was <" + result.doubleValue() + ">");
             }
         };
     }
@@ -667,10 +667,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             if (result.doubleValue() > 0) {
-                throw new AssertionError("Expected result to be not positive, was `" + result.doubleValue() + "`");
+                throw new AssertionError("Expected result to be not positive, was <" + result.doubleValue() + ">");
             }
         };
     }
@@ -687,10 +687,10 @@ public interface Assertion<T> {
         return (resultSupplier) -> {
             final Number result = resultSupplier.get();
             if (result == null) {
-                throw new AssertionError("Result was `null`");
+                throw new AssertionError("Result was <null>");
             }
             if (result.doubleValue() < 0) {
-                throw new AssertionError("Expected result to be not negative, was `" + result.doubleValue() + "`");
+                throw new AssertionError("Expected result to be not negative, was <" + result.doubleValue() + ">");
             }
         };
     }

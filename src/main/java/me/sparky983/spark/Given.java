@@ -89,7 +89,7 @@ public final class Given<T> {
      * @see #given(Object)
      * @since 1.0
      */
-    public static <T> Given<T> given(final Supplier<T> given) {
+    public static <T> Given<T> getGiven(final Supplier<T> given) {
 
         Objects.requireNonNull(given, "given cannot be null");
 

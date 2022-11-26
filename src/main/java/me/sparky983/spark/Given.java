@@ -66,21 +66,21 @@ public final class Given<T> {
      * Creates a new given with the specified given object supplier.
      * <p>
      * This is often used when setup logic is more complex, such as if you need to set up mocks.
-     * <pre>
+     * <pre>{@code
      * given(() -> {
      *     mock = mock(Object.class);
      *     return new TestedObject(mock);
      * )}.when(...)
      *         .then(...)
-     * </pre>
+     * }</pre>
      * Examples:
-     * <pre>
+     * <pre>{@code
      * import static me.sparky983.spark.Given.given;
      *
      * given(() -> "a string")
      *         .when(...)
      *         .then(...);
-     * </pre>
+     * }</pre>
      *
      * @param given the given object supplier.
      * @return the newly created given.

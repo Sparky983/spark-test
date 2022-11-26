@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static me.sparky983.spark.Assertion.throwsException;
 import static me.sparky983.spark.Given.given;
 import static me.sparky983.spark.Given.givenNull;
+import static me.sparky983.spark.When.when;
 
 import java.util.function.Supplier;
 
@@ -21,8 +22,7 @@ class GivenTest {
     @Test
     void testGivenWhenSupplierNull() {
 
-        given((Supplier<?>) null)
-                .when(Given::given)
+        when(() -> given((Supplier<?>) null))
                 .then(throwsException(NullPointerException.class));
     }
 

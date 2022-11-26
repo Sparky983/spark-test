@@ -1,6 +1,6 @@
 # Release
 
-1. Update the version number in `gradle.properties` based on the commit messages
+1. Update the version number in `gradle.properties`
 2. Commit the changes with the commit message `Release <version>`
 3. Create a tag for the version `v<version>`
 4. Push the commit and tag to GitHub

@@ -63,6 +63,40 @@ public final class Given<T> {
     }
 
     /**
+     * Creates a new given with the specified given object supplier.
+     * <p>
+     * This is often used when setup logic is more complex, such as if you need to set up mocks.
+     * <pre>{@code
+     * given(() -> {
+     *     mock = mock(Object.class);
+     *     return new TestedObject(mock);
+     * )}.when(...)
+     *         .then(...)
+     * }</pre>
+     * Examples:
+     * <pre>{@code
+     * import static me.sparky983.spark.Given.given;
+     *
+     * given(() -> "a string")
+     *         .when(...)
+     *         .then(...);
+     * }</pre>
+     *
+     * @param given the given object supplier.
+     * @return the newly created given.
+     * @param <T> the type of the given object.
+     * @throws NullPointerException if the given object supplier is {@code null}.
+     * @see #given(Object)
+     * @since 1.0
+     */
+    public static <T> Given<T> getGiven(final Supplier<T> given) {
+
+        Objects.requireNonNull(given, "given cannot be null");
+
+        return given(given.get());
+    }
+
+    /**
      * Creates a new given of {@code null}.
      * <p>
      * In certain circumstances (when the {@code T} cannot be inferred), it is better to use
@@ -162,7 +196,6 @@ public final class Given<T> {
 
     /**
      * Creates a void action (the when-function) that is used to perform assertions on.
-     * <p>
      * <p>
      * Note that the when-function is not called immediately, it is only called when an assertion is
      * made.

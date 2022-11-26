@@ -163,7 +163,7 @@ public interface Assertion<T> {
     }
 
     /**
-     * Creates a new assertion that succeeds only if the supplying the result fails with an
+     * Creates a new assertion that succeeds only if supplying the result fails with an
      * exception that is an instance of the specified type.
      *
      * @param exception the exception type.
@@ -187,6 +187,42 @@ public interface Assertion<T> {
                         + throwable.getMessage() + ">", throwable);
             }
             throw new AssertionError("Expected exception of type <" + exception.getName()
+                    + "> to be thrown, found <null>");
+        };
+    }
+
+    /**
+     * Creates a new assertion that succeeds only if supplying the result fails with an exception
+     * that is an instance of the specified type and with the specified message.
+     *
+     * @param exception the type.
+     * @param message the message.
+     * @return the new assertion.
+     * @param <T> the type of the result.
+     * @throws NullPointerException if the exception or message is {@code null}.
+     * @since 1.1
+     */
+    static <T> Assertion<T> throwsException(final Class<? extends Throwable> exception,
+                                            final String message) {
+
+        Objects.requireNonNull(exception, "exception cannot be null");
+        Objects.requireNonNull(message, "message cannot be null");
+
+        return (resultSupplier) -> {
+            try {
+                resultSupplier.get();
+            } catch (final Throwable throwable) {
+                if (exception.isInstance(throwable) && message.equals(throwable.getMessage())) {
+                    return;
+                }
+                throw new AssertionError("Expected <"
+                        + exception.getName() + ": " + message
+                        + "> to be thrown, found <"
+                        + throwable.getClass().getName() + ": " + throwable.getMessage() +
+                        ">", throwable);
+            }
+            throw new AssertionError("Expected exception of type <"
+                    + exception.getName() + ": " + message
                     + "> to be thrown, found <null>");
         };
     }

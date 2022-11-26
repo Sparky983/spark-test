@@ -30,9 +30,46 @@ class ThrowsExceptionTest {
                             throw new NullPointerException();
                         }));
 
-        assertThrows(AssertionError.class, () -> {
+        assertThrows(AssertionError.class, () ->
             throwsException(AssertionError.class)
-                    .doAssertion(() -> null);
-        });
+                    .doAssertion(() -> null));
+    }
+
+    @Test
+    void testThrowsExceptionWithMessage() {
+
+        assertThrows(AssertionError.class, () ->
+                throwsException(NullPointerException.class, "message")
+                        .doAssertion(() -> {
+                            throw new RuntimeException("message");
+                        }));
+
+        assertThrows(AssertionError.class, () ->
+                throwsException(NullPointerException.class, "message")
+                        .doAssertion(() -> {
+                            throw new NullPointerException();
+                        }));
+
+        assertThrows(AssertionError.class, () ->
+                throwsException(NullPointerException.class, "message")
+                        .doAssertion(() -> {
+                            throw new NullPointerException("incorrect message");
+                        }));
+
+        assertThrows(AssertionError.class, () ->
+                throwsException(NullPointerException.class, "message")
+                        .doAssertion(() -> null));
+
+        assertDoesNotThrow(() ->
+                throwsException(NullPointerException.class, "message")
+                        .doAssertion(() -> {
+                            throw new NullPointerException("message");
+                        }));
+
+        assertDoesNotThrow(() ->
+                throwsException(RuntimeException.class, "message")
+                        .doAssertion(() -> {
+                            throw new RuntimeException("message", new Exception());
+                        }));
     }
 }

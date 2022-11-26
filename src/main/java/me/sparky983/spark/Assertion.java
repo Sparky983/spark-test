@@ -54,7 +54,7 @@ public interface Assertion<T> {
     }
 
     /*
-    General validators
+    General assertions
      */
 
     /**
@@ -248,7 +248,33 @@ public interface Assertion<T> {
     }
 
     /*
-    CharSequence validators
+    Boolean assertions
+     */
+
+    /**
+     * Creates a new assertion that fails if the result is false.
+     *
+     * @return the new assertion.
+     * @since 1.1
+     */
+    static Assertion<Boolean> isTrue() {
+
+        return isEqualTo(true);
+    }
+
+    /**
+     * Creates a new assertion that fails if the result is true.
+     *
+     * @return the new assertion.
+     * @since 1.1
+     */
+    static Assertion<Boolean> isFalse() {
+
+        return isEqualTo(false);
+    }
+
+    /*
+    CharSequence assertions
      */
 
     /**

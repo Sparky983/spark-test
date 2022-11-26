@@ -284,12 +284,12 @@ public interface Assertion<T> {
      * @return the new assertion.
      * @since 1.1
      */
+    @SuppressWarnings("OptionalAssignedToNull")
     static Assertion<Optional<?>> isPresent() {
 
         return (resultSupplier) -> {
             final Optional<?> result = resultSupplier.get();
-            //noinspection ConstantConditions
-            if (resultSupplier == null) {
+            if (result == null) {
                 throw new AssertionError("Expected result to be present, was: <null>");
             }
 
@@ -305,12 +305,12 @@ public interface Assertion<T> {
      * @return the new assertion.
      * @since 1.1
      */
+    @SuppressWarnings("OptionalAssignedToNull")
     static Assertion<Optional<?>> isEmpty() {
 
         return (resultSupplier) -> {
             final Optional<?> result = resultSupplier.get();
-            //noinspection ConstantConditions
-            if (resultSupplier == null) {
+            if (result == null) {
                 throw new AssertionError("Expected result to be empty, was: <null>");
             }
 

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
+@SuppressWarnings("OptionalAssignedToNull")
 class OptionalTest {
 
     @Test
@@ -19,6 +20,9 @@ class OptionalTest {
                 .whenDo((isPresent) -> isPresent.doAssertion(Optional::empty))
                 .then(throwsException(AssertionError.class));
 
+        given(isPresent())
+                .whenDo((isPresent) -> isPresent.doAssertion(() -> null))
+                .then(throwsException(AssertionError.class));
 
         given(isPresent())
                 .whenDo((isPresent) -> isPresent.doAssertion(() -> Optional.of(new Object())))
@@ -30,6 +34,10 @@ class OptionalTest {
 
         given(isEmpty())
                 .whenDo((isEmpty) -> isEmpty.doAssertion(() -> Optional.of(new Object())))
+                .then(throwsException(AssertionError.class));
+
+        given(isEmpty())
+                .whenDo((isEmpty) -> isEmpty.doAssertion(() -> null))
                 .then(throwsException(AssertionError.class));
 
         given(isEmpty())

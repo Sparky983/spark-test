@@ -3,6 +3,7 @@ package me.sparky983.spark;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -271,6 +272,52 @@ public interface Assertion<T> {
     static Assertion<Boolean> isFalse() {
 
         return isEqualTo(false);
+    }
+
+    /*
+    Optional assertions
+     */
+
+    /**
+     * Creates a new assertion that fails if the result is empty.
+     *
+     * @return the new assertion.
+     * @since 1.1
+     */
+    @SuppressWarnings("OptionalAssignedToNull")
+    static Assertion<Optional<?>> isPresent() {
+
+        return (resultSupplier) -> {
+            final Optional<?> result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Expected result to be present, was: <null>");
+            }
+
+            if (!result.isPresent()) {
+                throw new AssertionError("Expected result to be present, was: <Optional.empty>");
+            }
+        };
+    }
+
+    /**
+     * Creates a new assertion that fails if the result is present.
+     *
+     * @return the new assertion.
+     * @since 1.1
+     */
+    @SuppressWarnings("OptionalAssignedToNull")
+    static Assertion<Optional<?>> isEmpty() {
+
+        return (resultSupplier) -> {
+            final Optional<?> result = resultSupplier.get();
+            if (result == null) {
+                throw new AssertionError("Expected result to be empty, was: <null>");
+            }
+
+            if (result.isPresent()) {
+                throw new AssertionError("Expected result to be empty, was: <" + result + ">");
+            }
+        };
     }
 
     /*

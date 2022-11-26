@@ -91,6 +91,8 @@ public final class Given<T> {
      */
     public static <T> Given<T> given(final Supplier<T> given) {
 
+        Objects.requireNonNull(given, "given cannot be null");
+
         return given(given.get());
     }
 
@@ -194,7 +196,6 @@ public final class Given<T> {
 
     /**
      * Creates a void action (the when-function) that is used to perform assertions on.
-     * <p>
      * <p>
      * Note that the when-function is not called immediately, it is only called when an assertion is
      * made.
